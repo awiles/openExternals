@@ -1,0 +1,18 @@
+REM set up the build type.
+if "%~1"=="" (set BUILDTYPE=Debug) else (set BUILDTYPE=%1)
+
+echo Setting up environment for Qt usage...
+set PATH=@QT_DIR@\bin;%PATH%
+
+echo Setting up environment for VTK usage...
+set PATH=@openExternals_VTK_RUNTIME@;%PATH%
+
+echo Setting up environment for OpenCV usage...
+set PATH=@openExternals_OPENCV_RUNTIME@;%PATH%
+
+REM The following are not currently included but may be in the future.
+REM echo Setting up environment for PCL usage...
+REM set PATH=@openExternals_PCL_RUNTIME@;%PATH%
+
+REM echo Setting up environment for CTK usage...
+REM set PATH=@openExternals_CTK_DIR@\CTK-build\bin\%BUILDTYPE%;%PATH%

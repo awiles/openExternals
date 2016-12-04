@@ -1,0 +1,27 @@
+#!/bin/bash
+# set up the build type.
+#if [$1 -eq ""]
+#then
+#BUILDTYPE=Debug 
+#else 
+#BUILDTYPE=$1
+#fi
+
+echo "Setting up environment for Qt usage..."
+NEWPATH=@QT_DIR@/bin:@QT_DIR@/lib
+
+echo "Setting up environment for VTK usage..."
+NEWPATH=@openExternals_VTK_INSTALL_DIR@/bin:@openExternals_VTK_INSTALL_DIR@/lib:$NEWPATH
+
+echo "Setting up environment for OpenCV usage..."
+NEWPATH=@openExternals_OPENCV_DIR@/bin:@openExternals_OPENCV_DIR@/lib:$NEWPATH
+
+# keep here for later.
+#echo "Setting up environment for PCL usage..."
+#NEWPATH=@openExternals_PCL_DIR@/bin:@openExternals_PCL_DIR@/lib:$NEWPATH
+
+#echo "Setting up environment for CTK usage..."
+#NEWPATH=@openExternals_CTK_DIR@/CTK-build/bin:$NEWPATH
+
+echo "Export the new paths."
+export PATH=$NEWPATH:$PATH
