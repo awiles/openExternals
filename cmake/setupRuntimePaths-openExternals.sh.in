@@ -23,5 +23,12 @@ NEWPATH=@openExternals_OPENCV_DIR@/bin:@openExternals_OPENCV_DIR@/lib:$NEWPATH
 #echo "Setting up environment for CTK usage..."
 #NEWPATH=@openExternals_CTK_DIR@/CTK-build/bin:$NEWPATH
 
-echo "Export the new paths."
-export PATH=$NEWPATH:$PATH
+echo "Export the new path for the external libraries..."
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    echo "Detected Mac OSX, setting DYLD_LIBRARY_PATH to $NEWPATH"
+    export DYLD_LIBRARY_PATH=$NEWPATH
+else
+    echo "Defaulting to a Linux OS, setting PATH to $NEWPATH:$PATH"
+    export PATH=$NEWPATH:$PATH
+fi
