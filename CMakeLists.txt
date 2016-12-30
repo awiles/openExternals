@@ -21,7 +21,9 @@ if(WIN32)
     set(CMAKE_LIBRARY_PATH "C:\\Program Files (x86)\\Windows Kits\\8.0\\Lib\\win8\\um\\x64" CACHE PATH "Qt5 requires this.")
 	# Need wzunzip.exe for Boost download on windows.
 elseif(APPLE)
-    set(QT_DIR "/opt/Qt/5.2.1/clang_64" CACHE PATH "Need to set the Qt prefix for various things.")
+    # assume QT is installed to /opt/Qt
+    # need to use 5.4 with VTK 6.3 on Mac OSX Sierra.
+    set(QT_DIR "/opt/Qt/5.4/clang_64" CACHE PATH "Need to set the Qt prefix for various things.")
 else()
     set(QT_DIR "/opt/Qt/5.2.1/gcc_64" CACHE PATH "Need to set the Qt path in order to find it more easily." )
 endif()
@@ -58,10 +60,10 @@ ExternalProject_Add( vtk6
 	BINARY_DIR vtk/vtkBuild
 	INSTALL_DIR vtk/vtkInstall
 	GIT_REPOSITORY https://github.com/Kitware/VTK.git
-    GIT_TAG v6.1.0	
+    GIT_TAG v6.3.0
 	CMAKE_ARGS
 		-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-                -DVTK_Group_Qt:BOOL=ON
+        -DVTK_Group_Qt:BOOL=ON
 		-DVTK_QT_VERSION:STRING=5
 		-DCMAKE_PREFIX_PATH:STRING=${CMAKE_PREFIX_PATH}
 		-DCMAKE_LIBRARY_PATH:STRING=${CMAKE_LIBRARY_PATH}
@@ -73,13 +75,14 @@ ExternalProject_Add( vtk6
                 ${extra_params} )
 				
 set(openExternals_VTK_INSTALL_DIR ${CMAKE_BINARY_DIR}/vtk/vtkInstall)
-set(openExternals_VTK_DIR ${openExternals_VTK_INSTALL_DIR}/lib/cmake/vtk-6.1)
+set(openExternals_VTK_DIR ${openExternals_VTK_INSTALL_DIR}/lib/cmake/vtk-6.3)
 
 
 ########  OpenCV  ########
-option(openExternals_USE_OPENCV_2_4 "Revert to openCV 2.4.11 instead of the 3.0.0-beta." ON)
+option(openExternals_USE_OPENCV_2_4 "Revert to openCV 2.4.13.2 instead of the 3.0.0-beta." ON)
 if( openExternals_USE_OPENCV_2_4)
-	set(OPENCV_GIT_TAG "2.4.13" )
+    # need 2.4.13.2 to fix the Mac OSX Sierra 10.12 issue with QTKit.
+	set(OPENCV_GIT_TAG "2.4.13.2" )
 else()
 	# Build the released version of opencv
 	set(OPENCV_GIT_TAG "3.0.0")

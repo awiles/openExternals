@@ -39,7 +39,7 @@ else()
     configure_file(	
 		${CMAKE_SOURCE_DIR}/cmake/setupRuntimePaths-openExternals.sh.in
 		${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/setupRuntimePaths-openExternals.sh
-		@only )
+		@ONLY )
 	file(COPY ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/setupRuntimePaths-openExternals.sh
 		DESTINATION ${CMAKE_BINARY_DIR}/../
 		FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
