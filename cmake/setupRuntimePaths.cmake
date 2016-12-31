@@ -46,20 +46,22 @@ else()
 		DESTINATION ${CMAKE_BINARY_DIR}/../
 		FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 	if(XCODE)
-		set(xcodeproj_output_file ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/openExternals-Xcode-${CMAKE_BUILD_TYPE}.command)
-		if( EXISTS ${xcodeproj_output_file})
-			message(STATUS "Delete ${xcodeproj_output_file}")
-			file(REMOVE ${xcodeproj_output_file})
-		endif()
-		# create command file to launch the correct XCODE project.
-		configure_file(
-			${CMAKE_SOURCE_DIR}/cmake/openExternals-Xcode.command.in
-			${xcodeproj_output_file}
-			@ONLY )
-    	# copy it up and make it executable.
-		file(COPY ${xcodeproj_output_file}
-			DESTINATION ${CMAKE_BINARY_DIR}/../
-			FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+		foreach(BUILD_TYPE Debug Release)
+			set(xcodeproj_output_file ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/openExternals-Xcode-${BUILD_TYPE}.command)
+			if( EXISTS ${xcodeproj_output_file})
+				message(STATUS "Delete ${xcodeproj_output_file}")
+				file(REMOVE ${xcodeproj_output_file})
+			endif()
+			# create command file to launch the correct XCODE project.
+			configure_file(
+				${CMAKE_SOURCE_DIR}/cmake/openExternals-Xcode.command.in
+				${xcodeproj_output_file}
+				@ONLY )
+    		# copy it up and make it executable.
+			file(COPY ${xcodeproj_output_file}
+				DESTINATION ${CMAKE_BINARY_DIR}/../
+				FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+		endforeach()
 	endif(XCODE)
 	
 endif(WIN32)
