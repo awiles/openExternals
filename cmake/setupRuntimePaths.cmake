@@ -29,19 +29,37 @@ if(WIN32)
         message(WARNING "Runtime batch file not set up for this windows build.")
 	endif()
 else()
-	message(STATUS "Setting the runtime shell script files for gcc." )
+	message(STATUS "Setting the runtime shell script files for ." )
     set(openExternals_OPENCV_RUNTIME ${openExternals_OPENCV_DIR}/bin )
 	set(runtime_output_file ${CMAKE_BINARY_DIR}/../setupRuntimePaths-openExternals.sh)
 	if( EXISTS ${runtime_output_file} )
 			message(STATUS "Delete ${runtime_output_file}")
 			file(REMOVE ${runtime_output_file})
 	endif()
+	# configure the file into the cmake folder.
     configure_file(	
 		${CMAKE_SOURCE_DIR}/cmake/setupRuntimePaths-openExternals.sh.in
 		${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/setupRuntimePaths-openExternals.sh
 		@ONLY )
+    # copy it up and make it executable.
 	file(COPY ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/setupRuntimePaths-openExternals.sh
 		DESTINATION ${CMAKE_BINARY_DIR}/../
 		FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+	if(XCODE)
+		set(xcodeproj_output_file ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/openExternals-Xcode-${CMAKE_BUILD_TYPE}.command)
+		if( EXISTS ${xcodeproj_output_file})
+			message(STATUS "Delete ${xcodeproj_output_file}")
+			file(REMOVE ${xcodeproj_output_file})
+		endif()
+		# create command file to launch the correct XCODE project.
+		configure_file(
+			${CMAKE_SOURCE_DIR}/cmake/openExternals-Xcode.command.in
+			${xcodeproj_output_file}
+			@ONLY )
+    	# copy it up and make it executable.
+		file(COPY ${xcodeproj_output_file}
+			DESTINATION ${CMAKE_BINARY_DIR}/../
+			FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+	endif(XCODE)
 	
 endif(WIN32)
