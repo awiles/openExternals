@@ -129,6 +129,24 @@ set(openExternals_OPENCV_DIR ${CMAKE_BINARY_DIR}/opencv/opencvInstall)
 # do we need this the below variable?  OpenCVConfig.cmake should provide a variable.
 set(openExternals_OPENCV_INCLUDE_DIR ${CMAKE_BINARY_DIR}/opencv/opencvInstall/include)
 
+########  OpenIGTLink  ########
+ExternalProject_Add( openIGTLink
+	PREFIX openIGTLink
+    SOURCE_DIR openIGTLink/openIGTLink
+	BINARY_DIR openIGTLink/openIGTLinkBuild
+	INSTALL_DIR openIGTLink/openIGTLinkInstall
+	GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink.git
+    GIT_TAG v2.0
+	CMAKE_ARGS
+		-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+		-DBUILD_SHARED_LIBS:BOOL=ON
+		-DBUILD_TESTING:BOOL=OFF
+		-DUSE_GTEST:BOOL=OFF
+		-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/openIGTLink/openIGTLinkInstall
+        -DBUILD_EXAMPLES:BOOL=OFF )
+				
+set(openExternals_OPENIGTLINK_INSTALL_DIR ${CMAKE_BINARY_DIR}/openIGTLink/openIGTLinkInstall)
+set(openExternals_OPENIGTLINK_DIR ${openExternals_OPENIGTLINK_INSTALL_DIR}/lib/igtl)
 
 # set up the cmake configuration
 configure_file(

@@ -3,6 +3,7 @@
 
 if(WIN32)
     set(openExternals_VTK_RUNTIME ${CMAKE_BINARY_DIR}/vtk/vtkInstall/bin )
+	set(openExternals_OPENIGTLINK_RUNTIME ${CMAKE_BINARY_DIR}/openIGTLink/openIGTLinkInstall/bin )
     #set(openExternals_PCL_RUNTIME ${CMAKE_BINARY_DIR}/pcl/pclInstall/bin )
 	if(MSVC11 AND CMAKE_CL_64 )
 		message(STATUS "Setting the runtime batch files for Visual Studio 2012 Win64." )

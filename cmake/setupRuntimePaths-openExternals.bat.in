@@ -10,6 +10,9 @@ set PATH=@openExternals_VTK_RUNTIME@;%PATH%
 echo Setting up environment for OpenCV usage...
 set PATH=@openExternals_OPENCV_RUNTIME@;%PATH%
 
+echo Setting up environment for OpenIGTLink usage...
+set PATH=@openExternals_OPENIGTLINK_RUNTIME@;%PATH%
+
 REM The following are not currently included but may be in the future.
 REM echo Setting up environment for PCL usage...
 REM set PATH=@openExternals_PCL_RUNTIME@;%PATH%
